@@ -1,14 +1,17 @@
 const std = @import("std");
 const color = @import("cli-color.zig");
 
-fn do_something(s: []u8) !void {
-    std.debug.print("{s}\n", .{s});
-}
+// FIXME: "color.reset()" などを連結しないで出力すると、以下エラーが出る
+// ./src/cli-color.zig:6:30: error: unable to evaluate constant expression
+// return "\u{001b}[30m" ++ text;
+
+// FIXME: 引数の text を anytype から []const u8 にすると、以下エラーが出る
+// ./src/cli-color.zig:6:30: error: unable to evaluate constant expression
+// return "\u{001b}[30m" ++ text;
 
 pub fn main() anyerror!void {
-    const stdout = std.io.getStdOut();
-
     // Foreground color
+    const stdout = std.io.getStdOut();
     try stdout.writeAll(color.fgBlack("Foreground BLACK") ++ color.reset() ++ "\n");
     try stdout.writeAll(color.fgRed("Foreground RED") ++ color.reset() ++ "\n");
     try stdout.writeAll(color.fgGreen("Foreground GREEN") ++ color.reset() ++ "\n");
@@ -19,14 +22,14 @@ pub fn main() anyerror!void {
     try stdout.writeAll(color.fgWhite("Foreground WHITE") ++ color.reset() ++ "\n");
 
     // Background color
-    try stdout.writeAll(color.bgBlack("Background BLACK") ++ color.reset() ++ "\n");
-    try stdout.writeAll(color.bgRed("Background RED") ++ color.reset() ++ "\n");
-    try stdout.writeAll(color.bgGreen("Background GREEN") ++ color.reset() ++ "\n");
-    try stdout.writeAll(color.bgYellow("Background YELLOW") ++ color.reset() ++ "\n");
-    try stdout.writeAll(color.bgBlue("Background BLUE") ++ color.reset() ++ "\n");
-    try stdout.writeAll(color.bgMagenta("Background MAGENTA") ++ color.reset() ++ "\n");
-    try stdout.writeAll(color.bgCyan("Background CYAN") ++ color.reset() ++ "\n");
-    try stdout.writeAll(color.bgWhite("Background WHITE") ++ color.reset() ++ "\n");
+    std.debug.print("{s}\n", .{color.bgBlack("Background BLACK") ++ color.reset()});
+    std.debug.print("{s}\n", .{color.bgRed("Background RED") ++ color.reset()});
+    std.debug.print("{s}\n", .{color.bgGreen("Background GREEN") ++ color.reset()});
+    std.debug.print("{s}\n", .{color.bgYellow("Background YELLOW") ++ color.reset()});
+    std.debug.print("{s}\n", .{color.bgBlue("Background BLUE") ++ color.reset()});
+    std.debug.print("{s}\n", .{color.bgMagenta("Background MAGENTA") ++ color.reset()});
+    std.debug.print("{s}\n", .{color.bgCyan("Background CYAN") ++ color.reset()});
+    std.debug.print("{s}\n", .{color.bgWhite("Background WHITE") ++ color.reset()});
 
     // Mix
     try stdout.writeAll(color.bgBlack(color.fgCyan("Background BLACK x Foreground CYAN")) ++ color.reset() ++ "\n");
