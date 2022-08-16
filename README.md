@@ -18,7 +18,11 @@ zig build run
 
 ```zig
 const std = @import("std");
-const color = @import("cli-color.zig");
+const Color = @import("color.zig").Color;
 
-std.debug.print("{s}{s}\n", .{color.fgBlack("Foreground BLACK"), color.reset()});
+var allocator = std.heap.page_allocator;
+var color = Color.init(allocator);
+defer color.deinit();
+
+std.debug.print("{s}{s}\n", .{ color.fgBlack("Foreground BLACK"), color.reset() });
 ```
