@@ -75,30 +75,3 @@ pub fn bgCyan(text: anytype) []const u8 {
 pub fn bgWhite(text: anytype) []const u8 {
     return format("\u{001b}[47m{s}", text);
 }
-
-// pub fn hello() std.mem.Allocator.Error![]u8 {
-//     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-//     const allocator = gpa.allocator();
-//     defer _ = gpa.deinit();
-
-//     var buf = try std.fmt.allocPrint(allocator, "\u{001b}[31m{s}\u{001b}[0m", .{"bytes"});
-//     defer allocator.free(buf);
-
-//     // const stdout = std.io.getStdOut();
-//     // _ = try stdout.write(buf);
-
-//     return buf;
-// }
-
-// pub fn red(bytes: []const u8) []u8 {
-//     //return "\u{001b}[31m" ++ bytes ++ "\u{001b}[0m";
-
-//     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-//     const allocator = gpa.allocator();
-//     defer _ = gpa.deinit();
-
-//     const buf = std.fmt.allocPrint(allocator, "\u{001b}[31m{s}\u{001b}[0m", .{bytes}) catch @panic("allocPrint");
-//     defer allocator.free(buf);
-
-//     return buf;
-// }
