@@ -1,10 +1,6 @@
 const std = @import("std");
 const color = @import("cli-color.zig");
 
-// FIXME: 引数の text を anytype から []const u8 にすると、以下エラーが出る
-// ./src/cli-color.zig:6:30: error: unable to evaluate constant expression
-// return "\u{001b}[30m" ++ text;
-
 pub fn main() anyerror!void {
     // Foreground color
     std.debug.print("{s}{s}\n", .{color.fgBlack("Foreground BLACK"), color.reset()});
