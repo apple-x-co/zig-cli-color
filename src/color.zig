@@ -98,3 +98,27 @@ pub const Color = struct {
         return "\u{001b}[0m";
     }
 };
+
+test "Foreground BLACK" {
+    var allocator = std.testing.allocator;
+    var color = Color.init(allocator);
+    defer color.deinit();
+
+    try std.testing.expectEqualSlices(u8, color.fgBlack("BLACK"), "\u{001b}[30mBLACK");
+}
+
+test "Background BLACK" {
+    var allocator = std.testing.allocator;
+    var color = Color.init(allocator);
+    defer color.deinit();
+
+    try std.testing.expectEqualSlices(u8, color.bgBlack("BLACK"), "\u{001b}[40mBLACK");
+}
+
+test "Reset" {
+    var allocator = std.testing.allocator;
+    var color = Color.init(allocator);
+    defer color.deinit();
+
+    try std.testing.expectEqualSlices(u8, color.reset(), "\u{001b}[0m");
+}
